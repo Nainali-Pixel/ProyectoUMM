@@ -1,126 +1,339 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Florería Bloom 🌸</title>
-  <link rel="stylesheet" href="./assets/CSS/Style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Florería Bloom 🌸</title>
+    <link rel="stylesheet" href="./assets/CSS/Style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;700&display=swap"
+        rel="stylesheet">
 </head>
+
 <body>
 
-  <!-- HEADER -->
-  <header class="flores-header">
-    <a href="../index.html" class="back-btn">← Portafolio</a>
-    <div class="header-brand">
-      <div class="brand-image"></div>
-      <h1>Florería <em>Bloom</em></h1>
-    </div>
-    <button class="cart-toggle" id="cart-toggle">
-      Carrito <span id="cart-count" class="cart-count">0</span>
-    </button>
-  </header>
-
-  <!-- HERO BANNER -->
-  <section class="flores-hero">
-    <div class="hero-petal hero-petal-1"></div>
-    <div class="hero-petal hero-petal-2"></div>
-    <div class="hero-petal hero-petal-3"></div>
-    <div class="hero-petal hero-petal-4"></div>
-    <div class="hero-petal hero-petal-5"></div>
-    <div class="flores-hero-content">
-      <h2>Flores y diseños según tu propósito</h2>
-      <p>Descubre opciones para regalar, arreglos especiales y plantas para cultivar en casa.</p>
-      <a href="#productos" class="hero-cta">Ver Catálogo</a>
-    </div>
-  </section>
-
-  <!-- FILTROS DE CATEGORIA -->
-  <section class="categorias-section">
-    <div class="container">
-      <div class="filtros">
-        <button class="filtro-btn active" data-cat="todos">Todos</button>
-        <button class="filtro-btn" data-cat="Regalar">Regalar</button>
-        <button class="filtro-btn" data-cat="Arreglos">Arreglos</button>
-        <button class="filtro-btn" data-cat="Plantar">Plantar</button>
-      </div>
-      <div class="busqueda-group">
-        <input type="search" id="flower-search" placeholder="Buscar artículo por nombre" />
-      </div>
-    </div>
-  </section>
-
-  <!-- CATALOGO DE PRODUCTOS -->
-  <section class="productos-section" id="productos">
-    <div class="container">
-      <h2 class="section-title-flores">Nuestro Catálogo</h2>
-      <div id="loading" class="loading-msg">Cargando productos</div>
-      <div class="productos-grid" id="productos-grid">
-        
-      </div>
-
-    </div>
-  </section>
-
-  <!-- PANEL DEL CARRITO -->
-  <aside class="cart-panel" id="cart-panel">
-    <div class="cart-header">
-      <h3>Tu Carrito</h3>
-      <button class="cart-close" id="cart-close">✕</button>
-    </div>
-    <div class="cart-items" id="cart-items">
-      <p class="cart-empty">Tu carrito está vacío</p>
-    </div>
-    <div class="cart-footer">
-      <div class="cart-total">
-        Total: <span id="cart-total">$0</span>
-      </div>
-      <button class="btn-checkout" id="btn-checkout">
-        Proceder al Pago
-      </button>
-    </div>
-  </aside>
-  <div class="cart-overlay" id="cart-overlay"></div>
-
-  <!-- MODAL DE CHECKOUT -->
-  <div class="modal-overlay" id="modal-overlay">
-    <div class="checkout-modal" id="checkout-modal">
-      <h3>Finalizar Compra</h3>
-      <form id="checkout-form">
-        <div class="modal-group">
-          <label>Tu nombre</label>
-          <input type="text" id="checkout-nombre" placeholder="Nombre completo" required>
+    <!-- HEADER -->
+    <header class="flores-header">
+        <a href="../index.html" class="back-btn">← Portafolio</a>
+        <div class="header-brand">
+            <div class="brand-image"></div>
+            <h1>Florería <em>Bloom</em></h1>
         </div>
-        <div class="modal-group">
-          <label>Tu correo electrónico</label>
-          <input type="email" id="checkout-email" placeholder="correo@ejemplo.com" required>
-        </div>
-        <div class="modal-group">
-          <label>Dirección de entrega</label>
-          <input type="text" id="checkout-direccion" placeholder="Calle, número, ciudad" required>
-        </div>
-        <div class="modal-resumen">
-          <h4>Resumen del pedido:</h4>
-          <div id="modal-resumen-items"></div>
-          <div class="modal-total">Total: <strong id="modal-total">$0</strong></div>
-        </div>
-        <div class="modal-btns">
-          <button type="button" class="btn-cancelar" id="btn-cancelar">Cancelar</button>
-          <button type="submit" class="btn-confirmar">Confirmar Pedido 🌸</button>
-        </div>
-      </form>
-    </div>
-  </div>
+        <button class="cart-toggle" id="cart-toggle">
+            Carrito <span id="cart-count" class="cart-count">0</span>
+        </button>
+    </header>
 
-  <!-- ALERTA/NOTIFICACION -->
-  <div class="flores-alerta" id="flores-alerta"></div>
+    <!-- HERO BANNER -->
+    <section class="flores-hero">
+        <div class="hero-petal hero-petal-1"></div>
+        <div class="hero-petal hero-petal-2"></div>
+        <div class="hero-petal hero-petal-3"></div>
+        <div class="hero-petal hero-petal-4"></div>
+        <div class="hero-petal hero-petal-5"></div>
+        <div class="flores-hero-content">
+            <h2>Flores y diseños según tu propósito</h2>
+            <p>Descubre opciones para regalar, arreglos especiales y plantas para cultivar en casa.</p>
+            <a href="#productos" class="hero-cta">Ver Catálogo</a>
+        </div>
+    </section>
 
-  <!-- FOOTER -->
-  <footer class="flores-footer">
-    <p>🌸 Florería Bloom &copy; 2024 · Todos los derechos reservados</p>
-    <p class="footer-tagline">Proyecto académico — Portafolio de Milena Escobar</p>
-  </footer>
+    <!-- FILTROS DE CATEGORIA -->
+    <section class="categorias-section">
+        <div class="container">
+            <div class="filtros">
+                <button class="filtro-btn active" data-cat="todos">Todos</button>
+                <button class="filtro-btn" data-cat="Regalar">Regalar</button>
+                <button class="filtro-btn" data-cat="Arreglos">Arreglos</button>
+                <button class="filtro-btn" data-cat="Plantar">Plantar</button>
+            </div>
+            <div class="busqueda-group">
+                <input type="search" id="flower-search" placeholder="Buscar artículo por nombre" />
+            </div>
+        </div>
+    </section>
 
-  <script src="../JS/flores.js"></script>
+    <!-- CATALOGO DE PRODUCTOS -->
+    <section class="productos-section" id="productos">
+        <div class="container">
+            <h2 class="section-title-flores">Nuestro Catálogo</h2>
+            <div class="productos-grid" id="productos-grid">
+
+                <div class="producto-card"">
+                    <div class="producto-imagen">
+                        <img src="./assets/img/images.jpg" alt="ramo" />
+                        <div class="imagen-placeholder">
+                        </div>
+                    </div>
+                    <div class="producto-info">
+                        <span class="producto-categoria">Categoría 1</span>
+                        <h3 class="producto-nombre">Producto 1</h3>
+                        <p class="producto-descripcion">Descripción del producto 1</p>
+                        <div class="producto-footer">
+                            <button class="btn-agregar"">
+                                + Agregar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="producto-card"">
+                    <div class="producto-imagen">
+                        <img src="./assets/img/images.jpg" alt="ramo" />
+                        <div class="imagen-placeholder">
+                        </div>
+                    </div>
+                    <div class="producto-info">
+                        <span class="producto-categoria">Categoría 1</span>
+                        <h3 class="producto-nombre">Producto 2</h3>
+                        <p class="producto-descripcion">Descripción del producto 2</p>
+                        <div class="producto-footer">
+                            <button class="btn-agregar"">
+                                + Agregar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="producto-card"">
+                    <div class="producto-imagen">
+                        <img src="./assets/img/images.jpg" alt="ramo" />
+                        <div class="imagen-placeholder">
+                        </div>
+                    </div>
+                    <div class="producto-info">
+                        <span class="producto-categoria">Categoría 1</span>
+                        <h3 class="producto-nombre">Producto 3</h3>
+                        <p class="producto-descripcion">Descripción del producto 3</p>
+                        <div class="producto-footer">
+                            <button class="btn-agregar"">
+                                + Agregar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="producto-card"">
+                    <div class="producto-imagen">
+                        <img src="./assets/img/images.jpg" alt="ramo" />
+                        <div class="imagen-placeholder">
+                        </div>
+                    </div>
+                    <div class="producto-info">
+                        <span class="producto-categoria">Categoría 1</span>
+                        <h3 class="producto-nombre">Producto 4</h3>
+                        <p class="producto-descripcion">Descripción del producto 4</p>
+                        <div class="producto-footer">
+                            <button class="btn-agregar"">
+                                + Agregar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="producto-card"">
+                    <div class="producto-imagen">
+                        <img src="./assets/img/images.jpg" alt="ramo" />
+                        <div class="imagen-placeholder">
+                        </div>
+                    </div>
+                    <div class="producto-info">
+                        <span class="producto-categoria">Categoría 1</span>
+                        <h3 class="producto-nombre">Producto 5</h3>
+                        <p class="producto-descripcion">Descripción del producto 5</p>
+                        <div class="producto-footer">
+                            <button class="btn-agregar"">
+                                + Agregar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="producto-card"">
+                    <div class="producto-imagen">
+                        <img src="./assets/img/images.jpg" alt="ramo" />
+                        <div class="imagen-placeholder">
+                        </div>
+                    </div>
+                    <div class="producto-info">
+                        <span class="producto-categoria">Categoría 1</span>
+                        <h3 class="producto-nombre">Producto 6</h3>
+                        <p class="producto-descripcion">Descripción del producto 6</p>
+                        <div class="producto-footer">
+                            <button class="btn-agregar"">
+                                + Agregar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="producto-card"">
+                    <div class="producto-imagen">
+                        <img src="./assets/img/images.jpg" alt="ramo" />
+                        <div class="imagen-placeholder">
+                        </div>
+                    </div>
+                    <div class="producto-info">
+                        <span class="producto-categoria">Categoría 1</span>
+                        <h3 class="producto-nombre">Producto 7</h3>
+                        <p class="producto-descripcion">Descripción del producto 7</p>
+                        <div class="producto-footer">
+                            <button class="btn-agregar"">
+                                + Agregar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="producto-card"">
+                    <div class="producto-imagen">
+                        <img src="./assets/img/images.jpg" alt="ramo" />
+                        <div class="imagen-placeholder">
+                        </div>
+                    </div>
+                    <div class="producto-info">
+                        <span class="producto-categoria">Categoría 1</span>
+                        <h3 class="producto-nombre">Producto 8</h3>
+                        <p class="producto-descripcion">Descripción del producto 8</p>
+                        <div class="producto-footer">
+                            <button class="btn-agregar"">
+                                + Agregar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="producto-card"">
+                    <div class="producto-imagen">
+                        <img src="./assets/img/images.jpg" alt="ramo" />
+                        <div class="imagen-placeholder">
+                        </div>
+                    </div>
+                    <div class="producto-info">
+                        <span class="producto-categoria">Categoría 1</span>
+                        <h3 class="producto-nombre">Producto 9</h3>
+                        <p class="producto-descripcion">Descripción del producto 9</p>
+                        <div class="producto-footer">
+                            <button class="btn-agregar"">
+                                + Agregar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="producto-card"">
+                    <div class="producto-imagen">
+                        <img src="./assets/img/images.jpg" alt="ramo" />
+                        <div class="imagen-placeholder">
+                        </div>
+                    </div>
+                    <div class="producto-info">
+                        <span class="producto-categoria">Categoría 1</span>
+                        <h3 class="producto-nombre">Producto 10</h3>
+                        <p class="producto-descripcion">Descripción del producto 10</p>
+                        <div class="producto-footer">
+                            <button class="btn-agregar"">
+                                + Agregar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="producto-card"">
+                    <div class="producto-imagen">
+                        <img src="./assets/img/images.jpg" alt="ramo" />
+                        <div class="imagen-placeholder">
+                        </div>
+                    </div>
+                    <div class="producto-info">
+                        <span class="producto-categoria">Categoría 1</span>
+                        <h3 class="producto-nombre">Producto 11</h3>
+                        <p class="producto-descripcion">Descripción del producto 11</p>
+                        <div class="producto-footer">
+                            <button class="btn-agregar"">
+                                + Agregar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="producto-card"">
+                    <div class="producto-imagen">
+                        <img src="./assets/img/images.jpg" alt="ramo" />
+                        <div class="imagen-placeholder">
+                        </div>
+                    </div>
+                    <div class="producto-info">
+                        <span class="producto-categoria">Categoría 1</span>
+                        <h3 class="producto-nombre">Producto 12</h3>
+                        <p class="producto-descripcion">Descripción del producto 12</p>
+                        <div class="producto-footer">
+                            <button class="btn-agregar"">
+                                + Agregar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- PANEL DEL CARRITO -->
+    <aside class=" cart-panel" id="cart-panel">
+                                <div class="cart-header">
+                                    <h3>Tu Carrito</h3>
+                                    <button class="cart-close" id="cart-close">✕</button>
+                                </div>
+                                <div class="cart-items" id="cart-items">
+                                    <p class="cart-empty">Tu carrito está vacío</p>
+                                </div>
+                                <div class="cart-footer">
+                                    <div class="cart-total">
+                                        Total: <span id="cart-total">$0</span>
+                                    </div>
+                                    <button class="btn-checkout" id="btn-checkout">
+                                        Proceder al Pago
+                                    </button>
+                                </div>
+                                </aside>
+                                <div class="cart-overlay" id="cart-overlay"></div>
+
+                                <!-- MODAL DE CHECKOUT -->
+                                <div class="modal-overlay" id="modal-overlay">
+                                    <div class="checkout-modal" id="checkout-modal">
+                                        <h3>Finalizar Compra</h3>
+                                        <form id="checkout-form">
+                                            <div class="modal-group">
+                                                <label>Tu nombre</label>
+                                                <input type="text" id="checkout-nombre" placeholder="Nombre completo"
+                                                    required>
+                                            </div>
+                                            <div class="modal-group">
+                                                <label>Tu correo electrónico</label>
+                                                <input type="email" id="checkout-email" placeholder="correo@ejemplo.com"
+                                                    required>
+                                            </div>
+                                            <div class="modal-group">
+                                                <label>Dirección de entrega</label>
+                                                <input type="text" id="checkout-direccion"
+                                                    placeholder="Calle, número, ciudad" required>
+                                            </div>
+                                            <div class="modal-resumen">
+                                                <h4>Resumen del pedido:</h4>
+                                                <div id="modal-resumen-items"></div>
+                                                <div class="modal-total">Total: <strong id="modal-total">$0</strong>
+                                                </div>
+                                            </div>
+                                            <div class="modal-btns">
+                                                <button type="button" class="btn-cancelar"
+                                                    id="btn-cancelar">Cancelar</button>
+                                                <button type="submit" class="btn-confirmar">Confirmar Pedido 🌸</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+
+                                <!-- ALERTA/NOTIFICACION -->
+                                <div class="flores-alerta" id="flores-alerta"></div>
+
+                                <!-- FOOTER -->
+                                <footer class="flores-footer">
+                                    <p>🌸 Florería Bloom &copy; 2024 · Todos los derechos reservados</p>
+                                    <p class="footer-tagline">Proyecto académico — Portafolio de Milena Escobar</p>
+                                </footer>
+
+                                <script src="../JS/flores.js"></script>
 </body>
+
 </html>
