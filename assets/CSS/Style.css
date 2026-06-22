@@ -846,3 +846,439 @@ body {
   .cart-panel.abierto { right: 0; }
   .checkout-modal { padding: 24px; }
 }
+
+/* =============================================
+   PAGINA DE CHECKOUT INDEPENDIENTE
+   ============================================= */
+.checkout-main {
+  padding: 50px 0 80px;
+  background: linear-gradient(160deg, #fff5f8 0%, #f5fff8 50%, #fff8f5 100%);
+  min-height: calc(100vh - 180px);
+}
+
+.checkout-wrapper {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.checkout-page-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.2rem;
+  color: var(--texto);
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.checkout-page-subtitle {
+  text-align: center;
+  color: var(--texto-suave);
+  margin-bottom: 45px;
+  font-size: 1.05rem;
+}
+
+.checkout-grid {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 36px;
+  align-items: start;
+}
+
+/* Columna Izquierda: Formulario */
+.checkout-form-card {
+  background: white;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+  border: 1px solid rgba(230, 62, 109, 0.08);
+}
+
+.form-section {
+  margin-bottom: 35px;
+  border-bottom: 1px dashed rgba(0,0,0,0.08);
+  padding-bottom: 25px;
+}
+
+.form-section:last-of-type {
+  border-bottom: none;
+  padding-bottom: 0;
+  margin-bottom: 25px;
+}
+
+.form-section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.25rem;
+  color: var(--texto);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.number-badge {
+  background: var(--rosa-claro);
+  color: var(--rosa);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  font-weight: 700;
+  border: 1px solid var(--rosa-mid);
+}
+
+.form-row {
+  margin-bottom: 18px;
+}
+
+.form-row.split-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-weight: 700;
+  color: var(--texto-suave);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  border: 1.5px solid #e8e8e8;
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 0.95rem;
+  font-family: 'Lato', sans-serif;
+  outline: none;
+  background-color: #fafafa;
+  transition: all 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: var(--rosa);
+  background-color: white;
+  box-shadow: 0 0 0 4px rgba(230, 62, 109, 0.08);
+}
+
+/* Opciones de pago */
+.payment-options {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 15px;
+}
+
+.payment-card {
+  display: flex;
+  align-items: flex-start;
+  padding: 16px;
+  border: 2px solid #e8e8e8;
+  border-radius: 12px;
+  cursor: pointer;
+  background-color: #fafafa;
+  transition: all 0.25s ease;
+}
+
+.payment-card input[type="radio"] {
+  width: auto;
+  margin-right: 12px;
+  margin-top: 4px;
+  accent-color: var(--rosa);
+}
+
+.payment-card-content {
+  display: flex;
+  gap: 12px;
+}
+
+.payment-icon {
+  font-size: 1.8rem;
+}
+
+.payment-details strong {
+  display: block;
+  font-size: 0.95rem;
+  color: var(--texto);
+  margin-bottom: 2px;
+}
+
+.payment-details span {
+  font-size: 0.8rem;
+  color: var(--texto-suave);
+}
+
+.payment-card:has(input[type="radio"]:checked) {
+  border-color: var(--rosa);
+  background-color: var(--rosa-claro);
+}
+
+.btn-confirmar-pedido {
+  width: 100%;
+  background: linear-gradient(135deg, var(--rosa), var(--naranja));
+  color: white;
+  border: none;
+  padding: 15px;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 20px rgba(230, 62, 109, 0.3);
+  font-family: 'Lato', sans-serif;
+  margin-top: 10px;
+}
+
+.btn-confirmar-pedido:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(230, 62, 109, 0.45);
+}
+
+.btn-confirmar-pedido:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Columna Derecha: Resumen de Pedido */
+.summary-card {
+  background: white;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+  border: 1px solid rgba(116, 198, 157, 0.15);
+  position: sticky;
+  top: 100px;
+}
+
+.summary-card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  color: var(--texto);
+  margin-bottom: 22px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--rosa-mid);
+}
+
+.summary-items {
+  max-height: 320px;
+  overflow-y: auto;
+  margin-bottom: 20px;
+  padding-right: 5px;
+}
+
+.summary-totals {
+  background-color: var(--gris-claro);
+  border-radius: 12px;
+  padding: 18px;
+  margin-bottom: 20px;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+  color: var(--texto-suave);
+}
+
+.summary-row.total-row {
+  margin-bottom: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--texto);
+}
+
+.summary-row strong {
+  color: var(--rosa);
+  font-size: 1.3rem;
+  font-family: 'Playfair Display', serif;
+}
+
+.free-shipping {
+  color: var(--verde);
+  font-weight: 700;
+}
+
+.summary-divider {
+  border: none;
+  border-top: 1px solid #ddd;
+  margin: 12px 0;
+}
+
+.security-info {
+  text-align: center;
+  border-top: 1px solid #eee;
+  padding-top: 15px;
+  font-size: 0.85rem;
+}
+
+.security-info strong {
+  color: var(--verde);
+}
+
+.security-tagline {
+  color: #888;
+  margin-top: 4px;
+}
+
+/* Responsividad para Checkout */
+@media (max-width: 900px) {
+  .checkout-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  .summary-card {
+    position: static;
+  }
+}
+
+@media (max-width: 600px) {
+  .form-row.split-row {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+  .checkout-form-card, .summary-card {
+    padding: 20px;
+  }
+}
+
+/* =============================================
+   PAGINA DE AGRADECIMIENTOS (gracias.html)
+   ============================================= */
+.thanks-main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  min-height: calc(100vh - 180px);
+}
+
+.thanks-card {
+  background: white;
+  border-radius: 20px;
+  padding: 40px;
+  width: 100%;
+  max-width: 600px;
+  text-align: center;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.06);
+  border: 1px solid rgba(230, 62, 109, 0.08);
+  animation: thanksEntry 0.5s ease;
+}
+
+@keyframes thanksEntry {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.thanks-icon {
+  font-size: 4rem;
+  margin-bottom: 20px;
+  display: inline-block;
+  animation: heartBeat 1.5s ease infinite alternate;
+}
+
+@keyframes heartBeat {
+  from { transform: scale(1); }
+  to { transform: scale(1.1); }
+}
+
+.thanks-card h2 {
+  font-family: 'Playfair Display', serif;
+  color: var(--texto);
+  font-size: 2.2rem;
+  margin-bottom: 12px;
+}
+
+.thanks-lead {
+  color: var(--texto-suave);
+  font-size: 1.1rem;
+  margin-bottom: 30px;
+}
+
+.receipt-details {
+  background-color: var(--rosa-claro);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 30px;
+  text-align: left;
+  border: 1px solid var(--rosa-mid);
+}
+
+.receipt-details h3 {
+  font-family: 'Playfair Display', serif;
+  color: var(--texto);
+  margin-bottom: 15px;
+  font-size: 1.2rem;
+  border-bottom: 1px solid var(--rosa-mid);
+  padding-bottom: 8px;
+}
+
+.receipt-row {
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+  color: var(--texto);
+}
+
+.receipt-row strong {
+  color: #333;
+}
+
+.transfer-info {
+  background-color: var(--verde-claro);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 30px;
+  text-align: left;
+  border: 1px solid var(--verde-mid);
+  color: var(--verde);
+}
+
+.transfer-info h3 {
+  font-family: 'Playfair Display', serif;
+  margin-bottom: 10px;
+  font-size: 1.15rem;
+  color: #1b4d3e;
+}
+
+.transfer-data {
+  font-family: monospace;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-top: 8px;
+  background: rgba(255,255,255,0.6);
+  padding: 10px;
+  border-radius: 6px;
+}
+
+.btn-thanks-home {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--rosa), var(--naranja));
+  color: white;
+  text-decoration: none;
+  padding: 14px 36px;
+  border-radius: 30px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  box-shadow: 0 6px 20px rgba(230, 62, 109, 0.25);
+  transition: all 0.3s ease;
+}
+
+.btn-thanks-home:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(230, 62, 109, 0.4);
+}
