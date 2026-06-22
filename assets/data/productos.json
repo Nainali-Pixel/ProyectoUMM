@@ -1,0 +1,110 @@
+[
+  {
+    "id": 1,
+    "nombre": "Primavera Encantada",
+    "descripcion": "Un mix vibrante de flores de estación ideal para alegrar el día de alguien especial.",
+    "precio": 24990,
+    "stock": 15,
+    "categoria": "Regalar",
+    "imagen": "./assets/img/images.jpg"
+  },
+  {
+    "id": 2,
+    "nombre": "Rosas del Amor",
+    "descripcion": "Docena de rosas rojas premium seleccionadas a mano, combinadas con follaje fino.",
+    "precio": 34990,
+    "stock": 8,
+    "categoria": "Regalar",
+    "imagen": "./assets/img/images (1).jpg"
+  },
+  {
+    "id": 3,
+    "nombre": "Tulipanes del Campo",
+    "descripcion": "Arreglo primaveral en base de cerámica con coloridos tulipanes frescos.",
+    "precio": 29990,
+    "stock": 12,
+    "categoria": "Arreglos",
+    "imagen": "./assets/img/images (2).jpg"
+  },
+  {
+    "id": 4,
+    "nombre": "Bonsái Zen Sereno",
+    "descripcion": "Hermoso bonsái de interior cultivado con paciencia, perfecto para purificar ambientes.",
+    "precio": 39990,
+    "stock": 5,
+    "categoria": "Plantar",
+    "imagen": "./assets/img/images (3).jpg"
+  },
+  {
+    "id": 5,
+    "nombre": "Orquídea Elegancia Blanca",
+    "descripcion": "Planta de orquídea phalaenopsis en maceta de cerámica, símbolo de refinamiento.",
+    "precio": 27990,
+    "stock": 10,
+    "categoria": "Plantar",
+    "imagen": "./assets/img/images.jpg"
+  },
+  {
+    "id": 6,
+    "nombre": "Canasta Celebración",
+    "descripcion": "Gran arreglo de flores exóticas y rosas multicolores en canasta de mimbre hecha a mano.",
+    "precio": 45000,
+    "stock": 6,
+    "categoria": "Arreglos",
+    "imagen": "./assets/img/images (1).jpg"
+  },
+  {
+    "id": 7,
+    "nombre": "Nubes de Algodón",
+    "descripcion": "Sutil ramo de liliums blancos y gipsofilias envuelto en papel craft ecológico.",
+    "precio": 22500,
+    "stock": 14,
+    "categoria": "Regalar",
+    "imagen": "./assets/img/images (2).jpg"
+  },
+  {
+    "id": 8,
+    "nombre": "Colección Suculentas",
+    "descripcion": "Trío de suculentas variadas en macetas de greda, muy fáciles de cuidar.",
+    "precio": 18990,
+    "stock": 20,
+    "categoria": "Plantar",
+    "imagen": "./assets/img/images (3).jpg"
+  },
+  {
+    "id": 9,
+    "nombre": "Ramo Amanecer Dorado",
+    "descripcion": "Brillante ramo de girasoles y flores silvestres amarillas que transmiten energía.",
+    "precio": 19990,
+    "stock": 11,
+    "categoria": "Regalar",
+    "imagen": "./assets/img/images.jpg"
+  },
+  {
+    "id": 10,
+    "nombre": "Arreglo Esencia Rústica",
+    "descripcion": "Combinación campestre de lavanda, margaritas y eucalipto en florero rústico.",
+    "precio": 32900,
+    "stock": 7,
+    "categoria": "Arreglos",
+    "imagen": "./assets/img/images (1).jpg"
+  },
+  {
+    "id": 11,
+    "nombre": "Costilla de Adán (Monstera)",
+    "descripcion": "Planta Monstera Deliciosa de hojas grandes y verdes, tendencia en decoración.",
+    "precio": 26500,
+    "stock": 9,
+    "categoria": "Plantar",
+    "imagen": "./assets/img/images (2).jpg"
+  },
+  {
+    "id": 12,
+    "nombre": "Ramo Dulce Romance",
+    "descripcion": "Encantadora selección de claveles rosados y gerberas, ideal para aniversarios.",
+    "precio": 28000,
+    "stock": 12,
+    "categoria": "Regalar",
+    "imagen": "./assets/img/images (3).jpg"
+  }
+]
