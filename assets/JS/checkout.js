@@ -3,7 +3,7 @@ let carrito = {};
 
 // Correo de destino para FormSubmit.
 // Cambia este valor por el correo donde quieres recibir los pedidos.
-const CORREO_DESTINO = 'nires16@gmail.com';
+const CORREO_DESTINO = 'bahumadaormazabal2003@gmail.com';
 
 // Cargar carrito desde localStorage
 function cargarCarrito() {
