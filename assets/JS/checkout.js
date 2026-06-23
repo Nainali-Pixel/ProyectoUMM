@@ -1,9 +1,10 @@
 // Variables globales y estado
 let carrito = {};
 
-// Correo de destino para FormSubmit.
-// Cambia este valor por el correo donde quieres recibir los pedidos.
-const CORREO_DESTINO = 'TU_CORREO@EMAIL.COM';
+// Correo fijo que recibirá todos los pedidos.
+// IMPORTANTE: este es el único correo receptor.
+// El correo que escribe el cliente en el formulario solo viaja como dato informativo.
+const CORREO_RECEPTOR_PEDIDOS = 'correo.destino@ejemplo.com';
 
 // Cargar carrito desde localStorage
 function cargarCarrito() {
@@ -86,12 +87,12 @@ function configurarFechaMinima() {
     }
 }
 
-// Configurar FormSubmit para enviar el pedido al correo elegido
+// Configurar FormSubmit para enviar el pedido solo al correo fijo definido en el código.
 function configurarEnvioCorreo() {
     const checkoutForm = document.getElementById('checkout-complete-form');
     if (!checkoutForm) return;
 
-    checkoutForm.action = `https://formsubmit.co/${CORREO_DESTINO}`;
+    checkoutForm.action = `https://formsubmit.co/${CORREO_RECEPTOR_PEDIDOS}`;
     checkoutForm.method = 'POST';
 
     // FormSubmit necesita una URL completa para redirigir después del envío.
@@ -140,6 +141,11 @@ if (checkoutForm) {
 
         if (!checkoutForm.checkValidity()) {
             checkoutForm.reportValidity();
+            return;
+        }
+
+        if (CORREO_RECEPTOR_PEDIDOS === 'correo.destino@ejemplo.com') {
+            mostrarNotificacion('⚠️ Debes cambiar el correo receptor en assets/JS/checkout.js antes de enviar.', 'error');
             return;
         }
 

@@ -6,32 +6,29 @@ Proyecto web estático con catálogo de productos, carrito de compras y formular
 
 El formulario de `checkout.html` quedó integrado con FormSubmit.
 
-Para cambiar el correo que recibirá los pedidos, edita este archivo:
+El pedido **siempre se envía a un solo correo fijo**, definido en el código JavaScript.
+El correo que el cliente escribe en el formulario no cambia el destinatario; solo se envía como dato informativo dentro del pedido.
+
+Para cambiar el correo que recibirá todos los pedidos, edita este archivo:
 
 `assets/JS/checkout.js`
 
 Busca esta línea:
 
 ```js
-const CORREO_DESTINO = 'TU_CORREO@EMAIL.COM';
+const CORREO_RECEPTOR_PEDIDOS = 'correo.destino@ejemplo.com';
 ```
 
-Reemplaza `TU_CORREO@EMAIL.COM` por el correo real. Ejemplo:
+Reemplaza `correo.destino@ejemplo.com` por el correo real. Ejemplo:
 
 ```js
-const CORREO_DESTINO = 'profesor@correo.com';
+const CORREO_RECEPTOR_PEDIDOS = 'profesor@correo.com';
 ```
 
-Además, en `checkout.html` también quedó el mismo correo como respaldo en el atributo `action` del formulario:
-
-```html
-action="https://formsubmit.co/TU_CORREO@EMAIL.COM"
-```
-
-Puedes reemplazarlo por el mismo correo de destino.
+No es necesario cambiar el `action` del formulario en `checkout.html`, porque el JavaScript lo completa automáticamente usando la constante anterior.
 
 ## Importante
 
-La primera vez que se envíe el formulario, FormSubmit solicitará activar el correo destino. Debes revisar la bandeja de entrada del correo configurado y confirmar la activación.
+La primera vez que se envíe el formulario, FormSubmit solicitará activar el correo receptor. Debes revisar la bandeja de entrada del correo configurado y confirmar la activación.
 
 Para que la redirección a `gracias.html` funcione correctamente, se recomienda probar el proyecto publicado en GitHub Pages u otro hosting, no solamente abriendo el HTML como archivo local.

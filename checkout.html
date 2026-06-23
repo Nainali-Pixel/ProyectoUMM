@@ -31,12 +31,11 @@
 
                 <!-- COLUMNA IZQUIERDA: FORMULARIO -->
                 <div class="checkout-form-column">
-                    <form id="checkout-complete-form" class="checkout-form-card"
-                        action="https://formsubmit.co/TU_CORREO@EMAIL.COM" method="POST">
+                    <form id="checkout-complete-form" class="checkout-form-card" action="" method="POST">
 
                         <!-- CONFIGURACIÓN FORMSUBMIT
-                             Cambia TU_CORREO@EMAIL.COM por el correo donde quieres recibir los pedidos.
-                             La primera vez FormSubmit enviará un correo de activación a esa dirección. -->
+                             El correo receptor NO se toma desde el formulario.
+                             Se define únicamente en assets/JS/checkout.js, en la constante CORREO_RECEPTOR_PEDIDOS. -->
                         <input type="hidden" name="_subject" value="Nueva solicitud de compra - Florería Bloom">
                         <input type="hidden" name="_template" value="table">
                         <input type="hidden" name="_captcha" value="false">
