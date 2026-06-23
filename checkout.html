@@ -31,7 +31,21 @@
 
                 <!-- COLUMNA IZQUIERDA: FORMULARIO -->
                 <div class="checkout-form-column">
-                    <form id="checkout-complete-form" class="checkout-form-card">
+                    <form id="checkout-complete-form" class="checkout-form-card"
+                        action="https://formsubmit.co/TU_CORREO@EMAIL.COM" method="POST">
+
+                        <!-- CONFIGURACIÓN FORMSUBMIT
+                             Cambia TU_CORREO@EMAIL.COM por el correo donde quieres recibir los pedidos.
+                             La primera vez FormSubmit enviará un correo de activación a esa dirección. -->
+                        <input type="hidden" name="_subject" value="Nueva solicitud de compra - Florería Bloom">
+                        <input type="hidden" name="_template" value="table">
+                        <input type="hidden" name="_captcha" value="false">
+                        <input type="hidden" id="form-next-url" name="_next" value="">
+
+                        <!-- Estos campos se completan desde assets/JS/checkout.js antes de enviar -->
+                        <input type="hidden" id="detallePedido" name="detalle_pedido">
+                        <input type="hidden" id="totalPedido" name="total_pedido">
+                        <input type="hidden" id="fechaPedido" name="fecha_pedido">
 
                         <!-- SECCION 1: CONTACTO -->
                         <div class="form-section">
@@ -39,19 +53,19 @@
                             <div class="form-row">
                                 <div class="form-group">
                                     <label for="c-nombre">Nombre Completo *</label>
-                                    <input type="text" id="c-nombre" name="nombre" placeholder="Juan Pérez" required
+                                    <input type="text" id="c-nombre" name="nombre_cliente" placeholder="Juan Pérez" required
                                         minlength="3">
                                 </div>
                             </div>
                             <div class="form-row split-row">
                                 <div class="form-group">
                                     <label for="c-email">Correo Electrónico *</label>
-                                    <input type="email" id="c-email" name="email" placeholder="juan@ejemplo.com"
+                                    <input type="email" id="c-email" name="correo_cliente" placeholder="juan@ejemplo.com"
                                         required>
                                 </div>
                                 <div class="form-group">
                                     <label for="c-telefono">Teléfono de Contacto *</label>
-                                    <input type="tel" id="c-telefono" name="telefono" placeholder="+56 9 1234 5678"
+                                    <input type="tel" id="c-telefono" name="telefono_cliente" placeholder="+56 9 1234 5678"
                                         required>
                                 </div>
                             </div>
@@ -64,14 +78,14 @@
                             <div class="form-row">
                                 <div class="form-group">
                                     <label for="c-direccion">Dirección de Entrega *</label>
-                                    <input type="text" id="c-direccion" name="direccion"
+                                    <input type="text" id="c-direccion" name="direccion_entrega"
                                         placeholder="Av. Providencia 1234, Depto 402" required>
                                 </div>
                             </div>
                             <div class="form-row split-row">
                                 <div class="form-group">
                                     <label for="c-comuna">Comuna *</label>
-                                    <select id="c-comuna" name="comuna" required>
+                                    <select id="c-comuna" name="comuna_entrega" required>
                                         <option value="" disabled selected>Selecciona comuna</option>
                                         <option value="Providencia">Providencia</option>
                                         <option value="Las Condes">Las Condes</option>
@@ -89,7 +103,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="c-fecha">Fecha de Entrega *</label>
-                                    <input type="date" id="c-fecha" name="fecha" required>
+                                    <input type="date" id="c-fecha" name="fecha_entrega" required>
                                 </div>
                             </div>
                         </div>
@@ -101,7 +115,7 @@
                             <div class="form-row">
                                 <div class="form-group">
                                     <label for="c-tarjeta">Mensaje para la tarjeta</label>
-                                    <textarea id="c-tarjeta" name="tarjeta" rows="3"
+                                    <textarea id="c-tarjeta" name="mensaje_tarjeta" rows="3"
                                         placeholder="Ej. ¡Feliz aniversario mi amor! Que estas flores alegren tu día."></textarea>
                                 </div>
                             </div>

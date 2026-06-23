@@ -1,5 +1,9 @@
-// Variables globales y estado 
+// Variables globales y estado
 let carrito = {};
+
+// Correo de destino para FormSubmit.
+// Cambia este valor por el correo donde quieres recibir los pedidos.
+const CORREO_DESTINO = 'TU_CORREO@EMAIL.COM';
 
 // Cargar carrito desde localStorage
 function cargarCarrito() {
@@ -82,16 +86,73 @@ function configurarFechaMinima() {
     }
 }
 
-// Procesar formulario de checkout
+// Configurar FormSubmit para enviar el pedido al correo elegido
+function configurarEnvioCorreo() {
+    const checkoutForm = document.getElementById('checkout-complete-form');
+    if (!checkoutForm) return;
+
+    checkoutForm.action = `https://formsubmit.co/${CORREO_DESTINO}`;
+    checkoutForm.method = 'POST';
+
+    // FormSubmit necesita una URL completa para redirigir después del envío.
+    // Esto funcionará correctamente cuando el proyecto esté publicado en GitHub Pages u otro hosting.
+    const nextInput = document.getElementById('form-next-url');
+    if (nextInput) {
+        if (window.location.protocol === 'http:' || window.location.protocol === 'https:') {
+            const graciasUrl = new URL('gracias.html', window.location.href).href;
+            nextInput.value = graciasUrl;
+        } else {
+            // En modo archivo local no se envía _next, porque FormSubmit no acepta rutas locales.
+            nextInput.removeAttribute('name');
+        }
+    }
+}
+
+// Generar detalle del pedido para que llegue ordenado al correo
+function generarDetallePedido(nombre, email, telefono, direccion, comuna, fecha, tarjeta, items, total) {
+    const detalleProductos = items.map((item, index) => {
+        const precio = item.producto.precio.toLocaleString('es-CL');
+        const subtotal = (item.producto.precio * item.cantidad).toLocaleString('es-CL');
+        return `${index + 1}. ${item.producto.nombre} | Cantidad: ${item.cantidad} | Precio: $${precio} | Subtotal: $${subtotal}`;
+    }).join('\n');
+
+    return `PEDIDO FLORERÍA BLOOM\n\n` +
+        `DATOS DEL CLIENTE\n` +
+        `Nombre: ${nombre}\n` +
+        `Correo: ${email}\n` +
+        `Teléfono: ${telefono}\n\n` +
+        `DATOS DE ENTREGA\n` +
+        `Dirección: ${direccion}\n` +
+        `Comuna: ${comuna}\n` +
+        `Fecha de entrega: ${fecha}\n\n` +
+        `DEDICATORIA\n` +
+        `${tarjeta || 'Sin dedicatoria'}\n\n` +
+        `PRODUCTOS\n` +
+        `${detalleProductos}\n\n` +
+        `TOTAL: $${total.toLocaleString('es-CL')}`;
+}
+
+// Procesar formulario de checkout y enviarlo por correo con FormSubmit
 const checkoutForm = document.getElementById('checkout-complete-form');
 if (checkoutForm) {
     checkoutForm.addEventListener('submit', (e) => {
         e.preventDefault();
 
+        if (!checkoutForm.checkValidity()) {
+            checkoutForm.reportValidity();
+            return;
+        }
+
+        const items = Object.values(carrito);
+        if (items.length === 0) {
+            mostrarNotificacion('⚠️ Tu carrito está vacío. Agrega productos antes de confirmar.', 'error');
+            return;
+        }
+
         const btnSubmit = checkoutForm.querySelector('.btn-confirmar-pedido');
         if (btnSubmit) {
             btnSubmit.disabled = true;
-            btnSubmit.textContent = 'Procesando tu pedido... 🌸';
+            btnSubmit.textContent = 'Enviando pedido por correo... 🌸';
         }
 
         // Obtener valores del formulario
@@ -103,10 +164,10 @@ if (checkoutForm) {
         const fecha = document.getElementById('c-fecha').value;
         const tarjeta = document.getElementById('c-tarjeta').value.trim();
 
-        const items = Object.values(carrito);
         const total = items.reduce((sum, item) => sum + (item.producto.precio * item.cantidad), 0);
+        const fechaCreacion = new Date().toLocaleString('es-CL');
 
-        // Objeto con la información del pedido completo
+        // Objeto con la información del pedido completo para gracias.html
         const pedidoCompleto = {
             cliente: { nombre, email, telefono },
             despacho: { direccion, comuna, fecha },
@@ -119,25 +180,31 @@ if (checkoutForm) {
                 subtotal: item.producto.precio * item.cantidad
             })),
             total,
-            fechaCreacion: new Date().toISOString()
+            fechaCreacion
         };
 
-        // Guardar último pedido en localStorage para usarlo en la vista de confirmación (gracias.html)
+        // Completar campos ocultos que se enviarán por correo
+        const detallePedido = document.getElementById('detallePedido');
+        const totalPedido = document.getElementById('totalPedido');
+        const fechaPedido = document.getElementById('fechaPedido');
+
+        if (detallePedido) {
+            detallePedido.value = generarDetallePedido(nombre, email, telefono, direccion, comuna, fecha, tarjeta, items, total);
+        }
+
+        if (totalPedido) {
+            totalPedido.value = `$${total.toLocaleString('es-CL')}`;
+        }
+
+        if (fechaPedido) {
+            fechaPedido.value = fechaCreacion;
+        }
+
+        // Guardar último pedido para mostrarlo en gracias.html
         localStorage.setItem('ultimo_pedido', JSON.stringify(pedidoCompleto));
 
-        // Simular procesamiento del pago y registro del pedido
-        setTimeout(() => {
-            // Limpiar el carrito de compras
-            localStorage.removeItem('carrito');
-
-            // Mostrar mensaje de éxito
-            mostrarNotificacion('¡Pedido procesado con éxito! Redirigiendo...', 'exito');
-
-            // Redirigir a gracias.html
-            setTimeout(() => {
-                window.location.href = 'gracias.html';
-            }, 1500);
-        }, 1500);
+        // Enviar el formulario real a FormSubmit
+        checkoutForm.submit();
     });
 }
 
@@ -145,3 +212,4 @@ if (checkoutForm) {
 cargarCarrito();
 renderizarResumen();
 configurarFechaMinima();
+configurarEnvioCorreo();

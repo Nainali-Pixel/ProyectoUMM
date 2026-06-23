@@ -81,6 +81,9 @@
                         document.getElementById('r-dedicatoria-container').style.display = 'block';
                         document.getElementById('r-dedicatoria').textContent = pedido.personalizacion.tarjeta;
                     }
+
+                    // Limpiar carrito después de confirmar que se llegó a la página de gracias.
+                    localStorage.removeItem('carrito');
                 }
             } catch (err) {
                 console.error('Error al cargar datos del pedido:', err);
