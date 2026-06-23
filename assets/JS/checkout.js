@@ -4,7 +4,7 @@ let carrito = {};
 // Correo fijo que recibirá todos los pedidos.
 // IMPORTANTE: este es el único correo receptor.
 // El correo que escribe el cliente en el formulario solo viaja como dato informativo.
-const CORREO_RECEPTOR_PEDIDOS = 'correo.destino@ejemplo.com';
+const CORREO_RECEPTOR_PEDIDOS = 'bahumadaormazabal2003@gmail.com';
 
 // Cargar carrito desde localStorage
 function cargarCarrito() {
