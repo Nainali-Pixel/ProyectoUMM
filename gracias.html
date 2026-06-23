@@ -1,21 +1,92 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agradecimientos 🌸</title>
-    <link rel="stylesheet" href="./assets/css/style.css">
+    <title>Gracias 🌸</title>
+    <link rel="stylesheet" href="./assets/CSS/Style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;700&display=swap"
+        rel="stylesheet">
 </head>
+
 <body>
+
+    <!-- HEADER -->
     <header class="flores-header">
-        <div class="header-brand">
+        <div class="header-brand" style="cursor: pointer;" onclick="window.location.href='index.html'">
             <div class="brand-image"></div>
-            <h1>Gracias por tu compra</h1>
-            <p>¡Tu pedido ha sido recibido y está siendo procesado!</p>
+            <h1>Florería <em>Bloom</em></h1>
         </div>
-        <button class="cart-toggle" onclick="window.location.href='index.html'">
-            Volver a la tienda 
-        </button>
+        <a href="index.html" class="back-btn">← Volver a la Tienda</a>
     </header>
+
+    <!-- MAIN THANKS SECTION -->
+    <main class="thanks-main">
+        <div class="thanks-card">
+            <span class="thanks-icon">🌸</span>
+            <h2>¡Tu pedido ha sido recibido!</h2>
+            <p class="thanks-lead">Gracias por confiar en Florería Bloom. Hemos iniciado la preparación de tus flores.
+            </p>
+
+            <div id="dynamic-receipt" style="display: none;">
+                <div class="receipt-details">
+                    <h3>Detalles del Despacho</h3>
+                    <div class="receipt-row"><strong>Cliente:</strong> <span id="r-nombre"></span></div>
+                    <div class="receipt-row"><strong>Correo:</strong> <span id="r-email"></span></div>
+                    <div class="receipt-row"><strong>Dirección:</strong> <span id="r-direccion"></span>, <span
+                            id="r-comuna"></span></div>
+                    <div class="receipt-row"><strong>Entrega:</strong> el <span id="r-fecha"></span></div>
+                    <div class="receipt-row" id="r-dedicatoria-container" style="display:none;">
+                        <strong>Mensaje:</strong> "<em><span id="r-dedicatoria"></span></em>"</div>
+                </div>
+            </div>
+
+            <a href="index.html" class="btn-thanks-home">Volver al Inicio</a>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="flores-footer">
+        <p>🌸 Florería Bloom &copy; 2026 · Todos los derechos reservados</p>
+        <p class="footer-tagline">Proyecto UMM - Benjamin Ahumada / Milena Escobar</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            try {
+                const pedidoRaw = localStorage.getItem('ultimo_pedido');
+                if (pedidoRaw) {
+                    const pedido = JSON.parse(pedidoRaw);
+
+                    // Mostrar bloque dinámico
+                    document.getElementById('dynamic-receipt').style.display = 'block';
+
+                    // Rellenar datos
+                    document.getElementById('r-nombre').textContent = pedido.cliente.nombre;
+                    document.getElementById('r-email').textContent = pedido.cliente.email;
+                    document.getElementById('r-direccion').textContent = pedido.despacho.direccion;
+                    document.getElementById('r-comuna').textContent = pedido.despacho.comuna;
+
+                    // Formatear fecha
+                    const partesFecha = pedido.despacho.fecha.split('-');
+                    if (partesFecha.length === 3) {
+                        document.getElementById('r-fecha').textContent = `${partesFecha[2]}/${partesFecha[1]}/${partesFecha[0]}`;
+                    } else {
+                        document.getElementById('r-fecha').textContent = pedido.despacho.fecha;
+                    }
+
+                    if (pedido.personalizacion && pedido.personalizacion.tarjeta) {
+                        document.getElementById('r-dedicatoria-container').style.display = 'block';
+                        document.getElementById('r-dedicatoria').textContent = pedido.personalizacion.tarjeta;
+                    }
+                }
+            } catch (err) {
+                console.error('Error al cargar datos del pedido:', err);
+            }
+        });
+    </script>
 </body>
+
 </html>
