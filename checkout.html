@@ -45,6 +45,7 @@
                         <input type="hidden" id="detallePedido" name="detalle_pedido">
                         <input type="hidden" id="totalPedido" name="total_pedido">
                         <input type="hidden" id="fechaPedido" name="fecha_pedido">
+                        <input type="hidden" id="correoClientePedido" name="correo_cliente_informado">
 
                         <!-- SECCION 1: CONTACTO -->
                         <div class="form-section">
@@ -53,19 +54,19 @@
                                 <div class="form-group">
                                     <label for="c-nombre">Nombre Completo *</label>
                                     <input type="text" id="c-nombre" name="nombre_cliente" placeholder="Juan Pérez" required
-                                        minlength="3">
+                                        minlength="3" pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]{3,}$" autocomplete="name">
                                 </div>
                             </div>
                             <div class="form-row split-row">
                                 <div class="form-group">
                                     <label for="c-email">Correo Electrónico *</label>
                                     <input type="email" id="c-email" name="correo_cliente" placeholder="juan@ejemplo.com"
-                                        required>
+                                        required autocomplete="email">
                                 </div>
                                 <div class="form-group">
                                     <label for="c-telefono">Teléfono de Contacto *</label>
                                     <input type="tel" id="c-telefono" name="telefono_cliente" placeholder="+56 9 1234 5678"
-                                        required>
+                                        required pattern="^[+0-9\s-]{8,15}$" autocomplete="tel">
                                 </div>
                             </div>
                         </div>
@@ -78,7 +79,7 @@
                                 <div class="form-group">
                                     <label for="c-direccion">Dirección de Entrega *</label>
                                     <input type="text" id="c-direccion" name="direccion_entrega"
-                                        placeholder="Av. Providencia 1234, Depto 402" required>
+                                        placeholder="Av. Providencia 1234, Depto 402" required minlength="5" autocomplete="street-address">
                                 </div>
                             </div>
                             <div class="form-row split-row">
@@ -114,7 +115,7 @@
                             <div class="form-row">
                                 <div class="form-group">
                                     <label for="c-tarjeta">Mensaje para la tarjeta</label>
-                                    <textarea id="c-tarjeta" name="mensaje_tarjeta" rows="3"
+                                    <textarea id="c-tarjeta" name="mensaje_tarjeta" rows="3" maxlength="250"
                                         placeholder="Ej. ¡Feliz aniversario mi amor! Que estas flores alegren tu día."></textarea>
                                 </div>
                             </div>
