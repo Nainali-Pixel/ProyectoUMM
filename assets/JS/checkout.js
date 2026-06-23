@@ -9,6 +9,7 @@ let carrito = {};
   solo se envía como dato informativo dentro del pedido.
 */
 const CORREO_RECEPTOR_PEDIDOS = 'bahumadaormazabal2003@gmail.com'; // <-- Cambiar por el correo real que recibirá TODOS los pedidos
+const CORREO_EJEMPLO = 'correo.destino@ejemplo.com';
 
 // Cargar carrito desde localStorage
 function cargarCarrito() {
@@ -125,6 +126,11 @@ function validarFormularioCheckout(formulario) {
     [nombre, email, telefono, direccion, comuna, fecha, tarjeta].forEach(campo => {
         if (campo) campo.setCustomValidity('');
     });
+
+    if (!esCorreoValido(CORREO_RECEPTOR_PEDIDOS) || CORREO_RECEPTOR_PEDIDOS === CORREO_EJEMPLO) {
+        mostrarNotificacion('⚠️ Debes cambiar el correo receptor fijo en assets/JS/checkout.js.', 'error');
+        return false;
+    }
 
     if (!nombre.value.trim() || nombre.value.trim().length < 3) {
         nombre.setCustomValidity('Ingresa un nombre válido de al menos 3 caracteres.');
