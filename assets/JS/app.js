@@ -211,19 +211,17 @@ if (cartToggle) cartToggle.addEventListener('click', abrirCarrito);
 if (cartClose) cartClose.addEventListener('click', cerrarCarrito);
 if (cartOverlay) cartOverlay.addEventListener('click', cerrarCarrito);
 
-// Vaciar carrito
-const btnVaciar = document.getElementById('btn-vaciar');
-if (btnVaciar) {
-  btnVaciar.addEventListener('click', () => {
+// Pagar, redirección a página de gracias
+const btnPagar = document.getElementById('btn-pagar');
+if (btnPagar) {
+  btnPagar.addEventListener('click', () => {
     const items = Object.values(carrito);
     if (items.length === 0) {
-      mostrarNotificacion('⚠️ El carrito ya está vacío', 'error');
+      mostrarNotificacion('⚠️ Agrega productos al carrito primero', 'error');
       return;
     }
-    carrito = {};
     guardarCarritoEnLocalStorage();
-    actualizarCarritoUI();
-    mostrarNotificacion('🗑️ Carrito vaciado');
+    window.location.href = 'gracias.html';
   });
 }
 
