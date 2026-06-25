@@ -219,13 +219,6 @@ function abrirModalCheckout() {
     cerrarCarrito();
     renderizarResumenModal();
     configurarFechaMinima();
-
-    // Fijar la URL de redirección post-envío
-    const nextInput = document.getElementById('form-next-url');
-    if (nextInput) {
-        nextInput.value = new URL('gracias.html', window.location.href).href;
-    }
-
     modalOverlay.classList.add('visible');
     document.body.style.overflow = 'hidden';
 }
@@ -376,6 +369,10 @@ if (checkoutForm) {
         document.getElementById('totalPedido').value        = `$${total.toLocaleString('es-CL')}`;
         document.getElementById('fechaPedido').value        = fechaCreacion;
         document.getElementById('correoClientePedido').value = email;
+
+        // _next: URL absoluta a gracias.html (requerida por FormSubmit)
+        const base = window.location.href.replace(/\/[^/]*$/, '/');
+        document.getElementById('form-next-url').value = base + 'gracias.html';
 
         // Guardar para la página de gracias
         localStorage.setItem('ultimo_pedido', JSON.stringify({
