@@ -6,7 +6,7 @@
     "precio": 24990,
     "stock": 15,
     "categoria": "Regalar",
-    "imagen": "./assets/img/images.jpg"
+    "imagen": "./assets/img/Regalo1.jpg"
   },
   {
     "id": 2,
@@ -15,7 +15,7 @@
     "precio": 34990,
     "stock": 8,
     "categoria": "Regalar",
-    "imagen": "./assets/img/images (1).jpg"
+    "imagen": "./assets/img/Regalo2.jpg"
   },
   {
     "id": 3,
@@ -24,7 +24,7 @@
     "precio": 29990,
     "stock": 12,
     "categoria": "Arreglos",
-    "imagen": "./assets/img/images (2).jpg"
+    "imagen": "./assets/img/Arreglo1.jpg"
   },
   {
     "id": 4,
@@ -33,7 +33,7 @@
     "precio": 39990,
     "stock": 5,
     "categoria": "Plantar",
-    "imagen": "./assets/img/images (3).jpg"
+    "imagen": "./assets/img/Maceta1.jpg"
   },
   {
     "id": 5,
@@ -42,7 +42,7 @@
     "precio": 27990,
     "stock": 10,
     "categoria": "Plantar",
-    "imagen": "./assets/img/images.jpg"
+    "imagen": "./assets/img/Maceta2.jpg"
   },
   {
     "id": 6,
@@ -51,7 +51,7 @@
     "precio": 45000,
     "stock": 6,
     "categoria": "Arreglos",
-    "imagen": "./assets/img/images (1).jpg"
+    "imagen": "./assets/img/Arreglo2.jpg"
   },
   {
     "id": 7,
@@ -60,7 +60,7 @@
     "precio": 22500,
     "stock": 14,
     "categoria": "Regalar",
-    "imagen": "./assets/img/images (2).jpg"
+    "imagen": "./assets/img/Regalo3.jpg"
   },
   {
     "id": 8,
@@ -69,7 +69,7 @@
     "precio": 18990,
     "stock": 20,
     "categoria": "Plantar",
-    "imagen": "./assets/img/images (3).jpg"
+    "imagen": "./assets/img/Maceta3.jpg"
   },
   {
     "id": 9,
@@ -78,7 +78,7 @@
     "precio": 19990,
     "stock": 11,
     "categoria": "Regalar",
-    "imagen": "./assets/img/images.jpg"
+    "imagen": "./assets/img/Regalo4.jpg"
   },
   {
     "id": 10,
@@ -87,7 +87,7 @@
     "precio": 32900,
     "stock": 7,
     "categoria": "Arreglos",
-    "imagen": "./assets/img/images (1).jpg"
+    "imagen": "./assets/img/Arreglo1.jpg"
   },
   {
     "id": 11,
@@ -96,7 +96,7 @@
     "precio": 26500,
     "stock": 9,
     "categoria": "Plantar",
-    "imagen": "./assets/img/images (2).jpg"
+    "imagen": "./assets/img/Maceta1.jpg"
   },
   {
     "id": 12,
@@ -105,6 +105,6 @@
     "precio": 28000,
     "stock": 12,
     "categoria": "Regalar",
-    "imagen": "./assets/img/images (3).jpg"
+    "imagen": "./assets/img/Regalo5.jpg"
   }
 ]
