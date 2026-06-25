@@ -9,6 +9,178 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;700&display=swap"
         rel="stylesheet">
+    <style>
+        /* ── MODAL CHECKOUT ── */
+        .checkout-modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,.55);
+            z-index: 2000;
+            align-items: flex-start;
+            justify-content: center;
+            overflow-y: auto;
+            padding: 32px 16px;
+        }
+        .checkout-modal-overlay.visible { display: flex; }
+
+        .checkout-modal {
+            background: #fff;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 820px;
+            padding: 40px 36px;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0,0,0,.2);
+            animation: slideUp .3s ease;
+        }
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to   { transform: translateY(0);    opacity: 1; }
+        }
+
+        .checkout-modal-close {
+            position: absolute;
+            top: 16px; right: 20px;
+            background: none; border: none;
+            font-size: 1.5rem; cursor: pointer;
+            color: #888; line-height: 1;
+        }
+        .checkout-modal-close:hover { color: #e63e6d; }
+
+        .checkout-page-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: #2c2c2c;
+            margin-bottom: 4px;
+        }
+        .checkout-page-subtitle {
+            color: #666;
+            font-size: .95rem;
+            margin-bottom: 28px;
+        }
+
+        .checkout-grid {
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            gap: 28px;
+        }
+        @media (max-width: 680px) {
+            .checkout-grid { grid-template-columns: 1fr; }
+            .checkout-modal { padding: 28px 18px; }
+        }
+
+        /* Form card */
+        .checkout-form-card { display: flex; flex-direction: column; gap: 0; }
+
+        .form-section { margin-bottom: 24px; }
+        .form-section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            color: #2c2c2c;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .number-badge {
+            background: #e63e6d;
+            color: #fff;
+            width: 26px; height: 26px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: .85rem;
+            font-weight: 700;
+        }
+        .form-row { display: flex; flex-direction: column; gap: 14px; margin-bottom: 0; }
+        .split-row { flex-direction: row; gap: 14px; }
+        @media (max-width: 500px) { .split-row { flex-direction: column; } }
+
+        .form-group { display: flex; flex-direction: column; flex: 1; }
+        .form-group label {
+            font-size: .85rem;
+            font-weight: 700;
+            color: #444;
+            margin-bottom: 6px;
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            border: 1.5px solid #ddd;
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-size: .95rem;
+            font-family: 'Lato', sans-serif;
+            color: #2c2c2c;
+            background: #fafafa;
+            transition: border-color .2s;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #e63e6d;
+            background: #fff;
+        }
+        .form-group textarea { resize: vertical; }
+
+        .btn-confirmar-pedido {
+            margin-top: 20px;
+            background: #e63e6d;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            padding: 14px 28px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            transition: background .2s, transform .1s;
+        }
+        .btn-confirmar-pedido:hover:not(:disabled) { background: #c72d57; transform: translateY(-1px); }
+        .btn-confirmar-pedido:disabled { opacity: .6; cursor: not-allowed; }
+
+        /* Summary card */
+        .summary-card {
+            background: #fdf6f9;
+            border: 1.5px solid #f0d4df;
+            border-radius: 14px;
+            padding: 24px 20px;
+            position: sticky;
+            top: 20px;
+        }
+        .summary-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.15rem;
+            color: #2c2c2c;
+            margin-bottom: 16px;
+        }
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: .92rem;
+            color: #555;
+            margin-bottom: 8px;
+        }
+        .total-row { font-size: 1.05rem; font-weight: 700; color: #2c2c2c; margin-top: 4px; }
+        .summary-divider { border: none; border-top: 1px solid #e8c8d4; margin: 10px 0; }
+        .free-shipping { color: #2a9d5c; font-weight: 700; }
+        .summary-empty { color: #999; font-size: .9rem; text-align: center; padding: 16px 0; }
+        .security-info {
+            margin-top: 18px;
+            padding-top: 14px;
+            border-top: 1px solid #e8c8d4;
+            font-size: .82rem;
+            color: #888;
+            text-align: center;
+        }
+        .security-info p { margin: 3px 0; }
+        .security-info strong { color: #555; }
+    </style>
 </head>
 
 <body>
@@ -24,7 +196,6 @@
         </button>
     </header>
 
-    <!-- HERO -->
     <section class="flores-hero">
         <div class="hero-petal hero-petal-1"></div>
         <div class="hero-petal hero-petal-2"></div>
@@ -83,119 +254,99 @@
     </aside>
     <div class="cart-overlay" id="cart-overlay"></div>
 
-    <!-- MODAL DE FORMULARIO DE PEDIDO -->
-    <div class="modal-overlay" id="modal-pedido">
+    <!-- ══════════════════════════════════════════
+         MODAL DE CHECKOUT (integrado en index.html)
+         ══════════════════════════════════════════ -->
+    <div class="checkout-modal-overlay" id="checkout-modal-overlay">
         <div class="checkout-modal">
-            <button class="cart-close" id="modal-close" style="position:absolute;top:16px;right:16px;">✕</button>
+            <button class="checkout-modal-close" id="checkout-modal-close" title="Cerrar">✕</button>
 
             <h2 class="checkout-page-title">Finalizar tu Compra</h2>
-            <p class="checkout-page-subtitle">Ingresa tus datos para procesar el pedido.</p>
+            <p class="checkout-page-subtitle">Por favor ingresa los datos de entrega para procesar tu orden.</p>
 
             <div class="checkout-grid">
 
-                <!-- FORMULARIO -->
+                <!-- COLUMNA IZQUIERDA: FORMULARIO -->
                 <div class="checkout-form-column">
-                    <form id="form-pedido" class="checkout-form-card"
-                        action="https://formsubmit.co/bahumadaormazabal2003@gmail.com"
-                        method="POST">
-
-                        <!-- CONFIGURACIÓN FORMSUBMIT -->
-                        <input type="hidden" name="_subject" value="Nueva solicitud de compra - Florería Bloom">
-                        <input type="hidden" name="_template" value="table">
-                        <input type="hidden" name="_captcha" value="false">
-                        <input type="hidden" name="_next" id="form-next-url" value="">
-
-                        <!-- Detalle del carrito (se rellena con JS antes de enviar) -->
-                        <input type="hidden" id="detalle-pedido" name="detalle_pedido">
-                        <input type="hidden" id="total-pedido" name="total_pedido">
+                    <div id="checkout-complete-form" class="checkout-form-card">
 
                         <!-- SECCIÓN 1: CONTACTO -->
                         <div class="form-section">
-                            <h3 class="form-section-title">
-                                <span class="number-badge">1</span> Datos de Contacto
-                            </h3>
+                            <h3 class="form-section-title"><span class="number-badge">1</span> Datos de Contacto</h3>
                             <div class="form-row">
                                 <div class="form-group">
                                     <label for="c-nombre">Nombre Completo *</label>
-                                    <input type="text" id="c-nombre" name="nombre_cliente"
-                                        placeholder="Juan Pérez" required minlength="3"
-                                        pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]{3,}$" autocomplete="name">
+                                    <input type="text" id="c-nombre" placeholder="Juan Pérez"
+                                        minlength="3" autocomplete="name">
                                 </div>
                             </div>
                             <div class="form-row split-row">
                                 <div class="form-group">
                                     <label for="c-email">Correo Electrónico *</label>
-                                    <input type="email" id="c-email" name="correo_cliente"
-                                        placeholder="juan@ejemplo.com" required autocomplete="email">
+                                    <input type="email" id="c-email" placeholder="juan@ejemplo.com" autocomplete="email">
                                 </div>
                                 <div class="form-group">
-                                    <label for="c-telefono">Teléfono *</label>
-                                    <input type="tel" id="c-telefono" name="telefono_cliente"
-                                        placeholder="+56 9 1234 5678" required
-                                        pattern="^[+0-9\s-]{8,15}$" autocomplete="tel">
+                                    <label for="c-telefono">Teléfono de Contacto *</label>
+                                    <input type="tel" id="c-telefono" placeholder="+56 9 1234 5678" autocomplete="tel">
                                 </div>
                             </div>
                         </div>
 
                         <!-- SECCIÓN 2: DESPACHO -->
                         <div class="form-section">
-                            <h3 class="form-section-title">
-                                <span class="number-badge">2</span> Detalles del Despacho
-                            </h3>
+                            <h3 class="form-section-title"><span class="number-badge">2</span> Detalles del Despacho</h3>
                             <div class="form-row">
                                 <div class="form-group">
                                     <label for="c-direccion">Dirección de Entrega *</label>
-                                    <input type="text" id="c-direccion" name="direccion_entrega"
-                                        placeholder="Av. Providencia 1234, Depto 402" required
-                                        minlength="5" autocomplete="street-address">
+                                    <input type="text" id="c-direccion"
+                                        placeholder="Av. Providencia 1234, Depto 402" autocomplete="street-address">
                                 </div>
                             </div>
                             <div class="form-row split-row">
                                 <div class="form-group">
                                     <label for="c-comuna">Comuna *</label>
-                                    <select id="c-comuna" name="comuna_entrega" required>
+                                    <select id="c-comuna">
                                         <option value="" disabled selected>Selecciona comuna</option>
-                                        <option>Providencia</option>
-                                        <option>Las Condes</option>
-                                        <option>Santiago Centro</option>
-                                        <option>Ñuñoa</option>
-                                        <option>Vitacura</option>
-                                        <option>La Reina</option>
-                                        <option>Lo Barnechea</option>
-                                        <option>Maipú</option>
-                                        <option>La Florida</option>
-                                        <option>Macul</option>
-                                        <option>Peñalolén</option>
-                                        <option>San Miguel</option>
+                                        <option value="Providencia">Providencia</option>
+                                        <option value="Las Condes">Las Condes</option>
+                                        <option value="Santiago Centro">Santiago Centro</option>
+                                        <option value="Ñuñoa">Ñuñoa</option>
+                                        <option value="Vitacura">Vitacura</option>
+                                        <option value="La Reina">La Reina</option>
+                                        <option value="Lo Barnechea">Lo Barnechea</option>
+                                        <option value="Maipú">Maipú</option>
+                                        <option value="La Florida">La Florida</option>
+                                        <option value="Macul">Macul</option>
+                                        <option value="Peñalolén">Peñalolén</option>
+                                        <option value="San Miguel">San Miguel</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="c-fecha">Fecha de Entrega *</label>
-                                    <input type="date" id="c-fecha" name="fecha_entrega" required>
+                                    <input type="date" id="c-fecha">
                                 </div>
                             </div>
                         </div>
 
                         <!-- SECCIÓN 3: DEDICATORIA -->
                         <div class="form-section">
-                            <h3 class="form-section-title">
-                                <span class="number-badge">3</span> Dedicatoria (Opcional)
-                            </h3>
+                            <h3 class="form-section-title"><span class="number-badge">3</span> Dedicatoria (Opcional)</h3>
                             <div class="form-row">
                                 <div class="form-group">
                                     <label for="c-tarjeta">Mensaje para la tarjeta</label>
-                                    <textarea id="c-tarjeta" name="mensaje_tarjeta" rows="3"
-                                        maxlength="250"
-                                        placeholder="Ej. ¡Feliz aniversario! Que estas flores alegren tu día."></textarea>
+                                    <textarea id="c-tarjeta" rows="3" maxlength="250"
+                                        placeholder="Ej. ¡Feliz aniversario mi amor! Que estas flores alegren tu día."></textarea>
                                 </div>
                             </div>
                         </div>
 
-                        <button type="submit" class="btn-confirmar-pedido">Confirmar Pedido</button>
-                    </form>
+                        <button type="button" class="btn-confirmar-pedido" id="btn-confirmar-pedido">
+                            Confirmar Pedido
+                        </button>
+                    </div>
                 </div>
 
-                <!-- RESUMEN DEL PEDIDO -->
+                <!-- COLUMNA DERECHA: RESUMEN -->
                 <div class="checkout-summary-column">
                     <div class="summary-card">
                         <h3>Resumen del Pedido</h3>
@@ -217,7 +368,7 @@
                         </div>
                         <div class="security-info">
                             <p><strong>Compra 100% Segura</strong></p>
-                            <p class="security-tagline">Tus datos están protegidos bajo protocolos de encriptación local.</p>
+                            <p>Tus datos están protegidos bajo protocolos de encriptación local.</p>
                         </div>
                     </div>
                 </div>
