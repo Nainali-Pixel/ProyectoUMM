@@ -47,7 +47,6 @@ async function cargarProductos() {
     if (loading) {
       loading.style.display = 'none';
     }
-    // Si no falló la carga, se filtran y renderizan
     if (productos.length > 0) {
       filtrarProductos();
     }
@@ -212,19 +211,19 @@ if (cartToggle) cartToggle.addEventListener('click', abrirCarrito);
 if (cartClose) cartClose.addEventListener('click', cerrarCarrito);
 if (cartOverlay) cartOverlay.addEventListener('click', cerrarCarrito);
 
-// Checkout, redirección a página de formulario
-const btnCheckout = document.getElementById('btn-checkout');
-if (btnCheckout) {
-  btnCheckout.addEventListener('click', () => {
+// Vaciar carrito
+const btnVaciar = document.getElementById('btn-vaciar');
+if (btnVaciar) {
+  btnVaciar.addEventListener('click', () => {
     const items = Object.values(carrito);
     if (items.length === 0) {
-      mostrarNotificacion('⚠️ Agrega productos al carrito primero', 'error');
+      mostrarNotificacion('⚠️ El carrito ya está vacío', 'error');
       return;
     }
-    // Guardar para asegurar consistencia
+    carrito = {};
     guardarCarritoEnLocalStorage();
-    // Redirigir a la nueva página de formulario
-    window.location.href = 'checkout.html';
+    actualizarCarritoUI();
+    mostrarNotificacion('🗑️ Carrito vaciado');
   });
 }
 
@@ -242,5 +241,4 @@ function mostrarNotificacion(mensaje, tipo = '') {
 }
 
 // Inicio de la app
-
 cargarProductos();
