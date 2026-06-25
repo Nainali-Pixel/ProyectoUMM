@@ -1,13 +1,6 @@
 /* ══════════════════════════════════════════════════════
    FLORERÍA BLOOM — app.js
-   Maneja: catálogo, carrito, modal de checkout y envío
-   por correo via FormSubmit.
    ══════════════════════════════════════════════════════ */
-
-/* ─── CORREO RECEPTOR ────────────────────────────────
-   Todos los pedidos llegan SOLO a este correo.
-   El email que escribe el cliente es solo informativo. */
-const CORREO_RECEPTOR_PEDIDOS = 'bahumadaormazabal2003@gmail.com';
 
 /* ─── ESTADO GLOBAL ──────────────────────────────── */
 let productos = [];
@@ -116,7 +109,6 @@ function filtrarProductos() {
     renderizarProductos(filtrados);
 }
 
-// Filtros por categoría
 document.querySelectorAll('.filtro-btn').forEach(btn => {
     btn.addEventListener('click', () => {
         document.querySelectorAll('.filtro-btn').forEach(b => b.classList.remove('active'));
@@ -126,7 +118,6 @@ document.querySelectorAll('.filtro-btn').forEach(btn => {
     });
 });
 
-// Búsqueda
 const searchInput = document.getElementById('flower-search');
 if (searchInput) {
     searchInput.addEventListener('input', (e) => {
@@ -162,14 +153,13 @@ function cambiarCantidad(productoId, delta) {
 }
 
 function actualizarCarritoUI() {
-    const itemsDiv   = document.getElementById('cart-items');
-    const totalDiv   = document.getElementById('cart-total');
-    const countSpan  = document.getElementById('cart-count');
+    const itemsDiv  = document.getElementById('cart-items');
+    const totalDiv  = document.getElementById('cart-total');
+    const countSpan = document.getElementById('cart-count');
     if (!itemsDiv || !totalDiv || !countSpan) return;
 
     const items = Object.values(carrito);
-    const totalItems = items.reduce((sum, item) => sum + item.cantidad, 0);
-    countSpan.textContent = totalItems;
+    countSpan.textContent = items.reduce((sum, item) => sum + item.cantidad, 0);
 
     if (items.length === 0) {
         itemsDiv.innerHTML = '<p class="cart-empty">Tu carrito está vacío</p>';
@@ -203,17 +193,12 @@ const cartToggle  = document.getElementById('cart-toggle');
 const cartClose   = document.getElementById('cart-close');
 
 function abrirCarrito() {
-    if (cartPanel && cartOverlay) {
-        cartPanel.classList.add('abierto');
-        cartOverlay.classList.add('visible');
-    }
+    cartPanel  && cartPanel.classList.add('abierto');
+    cartOverlay && cartOverlay.classList.add('visible');
 }
-
 function cerrarCarrito() {
-    if (cartPanel && cartOverlay) {
-        cartPanel.classList.remove('abierto');
-        cartOverlay.classList.remove('visible');
-    }
+    cartPanel  && cartPanel.classList.remove('abierto');
+    cartOverlay && cartOverlay.classList.remove('visible');
 }
 
 if (cartToggle)  cartToggle.addEventListener('click', abrirCarrito);
@@ -234,6 +219,13 @@ function abrirModalCheckout() {
     cerrarCarrito();
     renderizarResumenModal();
     configurarFechaMinima();
+
+    // Fijar la URL de redirección post-envío
+    const nextInput = document.getElementById('form-next-url');
+    if (nextInput) {
+        nextInput.value = new URL('gracias.html', window.location.href).href;
+    }
+
     modalOverlay.classList.add('visible');
     document.body.style.overflow = 'hidden';
 }
@@ -244,23 +236,19 @@ function cerrarModalCheckout() {
 }
 
 if (modalClose) modalClose.addEventListener('click', cerrarModalCheckout);
-
-// Cierra al hacer clic fuera del modal
-modalOverlay && modalOverlay.addEventListener('click', (e) => {
-    if (e.target === modalOverlay) cerrarModalCheckout();
-});
-
-// Botón "Proceder al Pago" del carrito
-const btnCheckout = document.getElementById('btn-checkout');
-if (btnCheckout) {
-    btnCheckout.addEventListener('click', abrirModalCheckout);
+if (modalOverlay) {
+    modalOverlay.addEventListener('click', (e) => {
+        if (e.target === modalOverlay) cerrarModalCheckout();
+    });
 }
 
-// Renderizar resumen dentro del modal
+const btnCheckout = document.getElementById('btn-checkout');
+if (btnCheckout) btnCheckout.addEventListener('click', abrirModalCheckout);
+
 function renderizarResumenModal() {
-    const listDiv       = document.getElementById('summary-items-list');
-    const subtotalSpan  = document.getElementById('summary-subtotal');
-    const totalSpan     = document.getElementById('summary-total-price');
+    const listDiv      = document.getElementById('summary-items-list');
+    const subtotalSpan = document.getElementById('summary-subtotal');
+    const totalSpan    = document.getElementById('summary-total-price');
     if (!listDiv) return;
 
     const items = Object.values(carrito);
@@ -294,66 +282,21 @@ function renderizarResumenModal() {
 
 function configurarFechaMinima() {
     const dateInput = document.getElementById('c-fecha');
-    if (dateInput) {
-        const hoy = new Date();
-        const yyyy = hoy.getFullYear();
-        const mm   = String(hoy.getMonth() + 1).padStart(2, '0');
-        const dd   = String(hoy.getDate()).padStart(2, '0');
-        dateInput.min = `${yyyy}-${mm}-${dd}`;
-    }
+    if (!dateInput) return;
+    const hoy = new Date();
+    const yyyy = hoy.getFullYear();
+    const mm   = String(hoy.getMonth() + 1).padStart(2, '0');
+    const dd   = String(hoy.getDate()).padStart(2, '0');
+    dateInput.min = `${yyyy}-${mm}-${dd}`;
 }
 
 /* ════════════════════════════════════════════════════
-   VALIDACIÓN Y ENVÍO DEL FORMULARIO
+   ENVÍO DEL FORMULARIO (submit nativo → FormSubmit)
+   El <form> con action ya está en index.html.
+   Aquí solo validamos y llenamos los campos hidden.
    ════════════════════════════════════════════════════ */
-function validarFormulario() {
-    const nombre    = document.getElementById('c-nombre').value.trim();
-    const email     = document.getElementById('c-email').value.trim();
-    const telefono  = document.getElementById('c-telefono').value.trim();
-    const direccion = document.getElementById('c-direccion').value.trim();
-    const comuna    = document.getElementById('c-comuna').value;
-    const fecha     = document.getElementById('c-fecha').value;
-    const tarjeta   = document.getElementById('c-tarjeta').value.trim();
-    const dateInput = document.getElementById('c-fecha');
-
-    if (nombre.length < 3 || !/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]{3,}$/.test(nombre)) {
-        mostrarNotificacion('⚠️ Ingresa un nombre válido (solo letras, mínimo 3 caracteres).', 'error');
-        return null;
-    }
-    if (!esCorreoValido(email)) {
-        mostrarNotificacion('⚠️ Ingresa un correo electrónico válido.', 'error');
-        return null;
-    }
-    if (!/^[+0-9\s-]{8,15}$/.test(telefono)) {
-        mostrarNotificacion('⚠️ Ingresa un teléfono válido. Ej: +56 9 1234 5678.', 'error');
-        return null;
-    }
-    if (direccion.length < 5) {
-        mostrarNotificacion('⚠️ Ingresa una dirección válida (mínimo 5 caracteres).', 'error');
-        return null;
-    }
-    if (!comuna) {
-        mostrarNotificacion('⚠️ Selecciona una comuna de entrega.', 'error');
-        return null;
-    }
-    if (!fecha) {
-        mostrarNotificacion('⚠️ Selecciona una fecha de entrega.', 'error');
-        return null;
-    }
-    if (dateInput.min && fecha < dateInput.min) {
-        mostrarNotificacion('⚠️ La fecha de entrega no puede ser anterior a hoy.', 'error');
-        return null;
-    }
-    if (tarjeta.length > 250) {
-        mostrarNotificacion('⚠️ La dedicatoria no puede superar los 250 caracteres.', 'error');
-        return null;
-    }
-
-    return { nombre, email, telefono, direccion, comuna, fecha, tarjeta };
-}
-
 function generarDetallePedido(datos, items, total) {
-    const detalleProductos = items.map((item, i) => {
+    const lineas = items.map((item, i) => {
         const precio   = item.producto.precio.toLocaleString('es-CL');
         const subtotal = (item.producto.precio * item.cantidad).toLocaleString('es-CL');
         return `${i + 1}. ${item.producto.nombre} | Cant: ${item.cantidad} | Precio: $${precio} | Subtotal: $${subtotal}`;
@@ -362,23 +305,61 @@ function generarDetallePedido(datos, items, total) {
     return `PEDIDO FLORERÍA BLOOM\n\n` +
         `DATOS DEL CLIENTE\n` +
         `Nombre: ${datos.nombre}\n` +
-        `Correo del cliente: ${datos.email}\n` +
+        `Correo: ${datos.email}\n` +
         `Teléfono: ${datos.telefono}\n\n` +
         `DATOS DE ENTREGA\n` +
         `Dirección: ${datos.direccion}\n` +
         `Comuna: ${datos.comuna}\n` +
-        `Fecha de entrega: ${datos.fecha}\n\n` +
+        `Fecha: ${datos.fecha}\n\n` +
         `DEDICATORIA\n${datos.tarjeta || 'Sin dedicatoria'}\n\n` +
-        `PRODUCTOS\n${detalleProductos}\n\n` +
+        `PRODUCTOS\n${lineas}\n\n` +
         `TOTAL: $${total.toLocaleString('es-CL')}`;
 }
 
-// Botón confirmar pedido
-const btnConfirmar = document.getElementById('btn-confirmar-pedido');
-if (btnConfirmar) {
-    btnConfirmar.addEventListener('click', () => {
-        const datos = validarFormulario();
-        if (!datos) return;
+const checkoutForm = document.getElementById('checkout-complete-form');
+if (checkoutForm) {
+    checkoutForm.addEventListener('submit', (e) => {
+        e.preventDefault(); // retener hasta validar
+
+        // ── Leer valores ──
+        const nombre    = document.getElementById('c-nombre').value.trim();
+        const email     = document.getElementById('c-email').value.trim();
+        const telefono  = document.getElementById('c-telefono').value.trim();
+        const direccion = document.getElementById('c-direccion').value.trim();
+        const comuna    = document.getElementById('c-comuna').value;
+        const fecha     = document.getElementById('c-fecha').value;
+        const tarjeta   = document.getElementById('c-tarjeta').value.trim();
+        const dateInput = document.getElementById('c-fecha');
+
+        // ── Validaciones ──
+        if (nombre.length < 3 || !/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]{3,}$/.test(nombre)) {
+            mostrarNotificacion('⚠️ Ingresa un nombre válido (solo letras, mínimo 3 caracteres).', 'error');
+            return;
+        }
+        if (!esCorreoValido(email)) {
+            mostrarNotificacion('⚠️ Ingresa un correo electrónico válido.', 'error');
+            return;
+        }
+        if (!/^[+0-9\s-]{8,15}$/.test(telefono)) {
+            mostrarNotificacion('⚠️ Ingresa un teléfono válido. Ej: +56 9 1234 5678.', 'error');
+            return;
+        }
+        if (direccion.length < 5) {
+            mostrarNotificacion('⚠️ Ingresa una dirección válida (mínimo 5 caracteres).', 'error');
+            return;
+        }
+        if (!comuna) {
+            mostrarNotificacion('⚠️ Selecciona una comuna de entrega.', 'error');
+            return;
+        }
+        if (!fecha) {
+            mostrarNotificacion('⚠️ Selecciona una fecha de entrega.', 'error');
+            return;
+        }
+        if (dateInput.min && fecha < dateInput.min) {
+            mostrarNotificacion('⚠️ La fecha de entrega no puede ser anterior a hoy.', 'error');
+            return;
+        }
 
         const items = Object.values(carrito);
         if (items.length === 0) {
@@ -386,17 +367,22 @@ if (btnConfirmar) {
             return;
         }
 
+        // ── Llenar campos hidden ──
         const total        = items.reduce((sum, item) => sum + (item.producto.precio * item.cantidad), 0);
         const fechaCreacion = new Date().toLocaleString('es-CL');
-        const detalle      = generarDetallePedido(datos, items, total);
+        const datos        = { nombre, email, telefono, direccion, comuna, fecha, tarjeta };
+
+        document.getElementById('detallePedido').value      = generarDetallePedido(datos, items, total);
+        document.getElementById('totalPedido').value        = `$${total.toLocaleString('es-CL')}`;
+        document.getElementById('fechaPedido').value        = fechaCreacion;
+        document.getElementById('correoClientePedido').value = email;
 
         // Guardar para la página de gracias
-        const pedidoCompleto = {
-            cliente:         { nombre: datos.nombre, email: datos.email, telefono: datos.telefono },
-            despacho:        { direccion: datos.direccion, comuna: datos.comuna, fecha: datos.fecha },
-            personalizacion: { tarjeta: datos.tarjeta },
+        localStorage.setItem('ultimo_pedido', JSON.stringify({
+            cliente:         { nombre, email, telefono },
+            despacho:        { direccion, comuna, fecha },
+            personalizacion: { tarjeta },
             productos:       items.map(item => ({
-                id:       item.producto.id,
                 nombre:   item.producto.nombre,
                 cantidad: item.cantidad,
                 precio:   item.producto.precio,
@@ -404,49 +390,13 @@ if (btnConfirmar) {
             })),
             total,
             fechaCreacion
-        };
-        localStorage.setItem('ultimo_pedido', JSON.stringify(pedidoCompleto));
+        }));
 
-        // Deshabilitar botón mientras se envía
-        btnConfirmar.disabled = true;
-        btnConfirmar.textContent = 'Enviando pedido... 🌸';
+        // Deshabilitar botón y enviar
+        const btn = document.getElementById('btn-confirmar-pedido');
+        if (btn) { btn.disabled = true; btn.textContent = 'Enviando pedido... 🌸'; }
 
-        // Construir y enviar formulario via FormSubmit
-        const urlGracias = new URL('gracias.html', window.location.href).href;
-
-        const form = document.createElement('form');
-        form.method = 'POST';
-        form.action = `https://formsubmit.co/${CORREO_RECEPTOR_PEDIDOS}`;
-        form.style.display = 'none';
-
-        const campos = {
-            '_subject':              'Nueva solicitud de compra - Florería Bloom',
-            '_template':             'table',
-            '_captcha':              'false',
-            '_next':                 urlGracias,
-            'nombre_cliente':        datos.nombre,
-            'correo_cliente':        datos.email,
-            'telefono_cliente':      datos.telefono,
-            'direccion_entrega':     datos.direccion,
-            'comuna_entrega':        datos.comuna,
-            'fecha_entrega':         datos.fecha,
-            'mensaje_tarjeta':       datos.tarjeta || 'Sin dedicatoria',
-            'detalle_pedido':        detalle,
-            'total_pedido':          `$${total.toLocaleString('es-CL')}`,
-            'fecha_pedido':          fechaCreacion,
-            'correo_cliente_informado': datos.email
-        };
-
-        Object.entries(campos).forEach(([name, value]) => {
-            const input = document.createElement('input');
-            input.type  = 'hidden';
-            input.name  = name;
-            input.value = value;
-            form.appendChild(input);
-        });
-
-        document.body.appendChild(form);
-        form.submit();
+        checkoutForm.submit(); // submit nativo al action de FormSubmit
     });
 }
 
